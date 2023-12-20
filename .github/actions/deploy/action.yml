@@ -1,0 +1,43 @@
+---
+name: "Deploy WordPress to Server"
+description: "Local copy of the site deployment GitHub Action used for testing the Docker image directly"
+inputs:
+  SSH_KEY_PRIVATE:
+    description: "The private RSA key you will save in the Github Secrets"
+    required: true
+  SRV_ENV:
+    description: "Destination to deploy to WPE"
+    required: false
+  PHP_LINT:
+    description: "optional php syntax check"
+    required: false
+  FLAGS:
+    description: "Optional flags for the deployment"
+    required: false
+  CACHE_CLEAR:
+    description: "Optional WPE Clear cache"
+    required: false
+  SRC_PATH:
+    description: "An optional source directory to deploy other than the root directory that is being versioned."
+    default: "."
+    required: false
+  REMOTE_PATH:
+    description: "An optional destination directory to deploy to other than the WordPress root."
+    default: ""
+    required: false
+  SCRIPT:
+    description: "File containing custom scripts run after the rsync"
+    required: false
+
+runs:
+  using: "docker"
+  image: "../../../Dockerfile"
+  env:
+    SSH_KEY_PRIVATE: ${{ inputs.SSH_KEY_PRIVATE }}
+    SRV_ENV: ${{ inputs.SRV_ENV }}
+    REMOTE_PATH: ${{ inputs.REMOTE_PATH }}
+    SRC_PATH: ${{ inputs.SRC_PATH }}
+    FLAGS: ${{ inputs.FLAGS }}
+    PHP_LINT: ${{ inputs.PHP_LINT }}
+    CACHE_CLEAR: ${{ inputs.CACHE_CLEAR }}
+    SCRIPT: ${{ inputs.SCRIPT }}
