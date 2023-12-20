@@ -1,5 +1,5 @@
-# wpengine/site-deploy
-Base image to build VCS integrations enabling customers to deploy their site to WP Engine
+# discountdaddy/site-deploy
+Base image to build VCS integrations enabling customers to deploy their site to Server
 
 ## How to Build
 
@@ -16,12 +16,12 @@ make clean       # Deletes all tagged versions of the image
 
 You can use this image to deploy a site from your local machine.
 
-1. Build the `wpengine/site-deploy:latest` image with `make build`.
+1. Build the `discountdaddy/site-deploy:latest` image with `make build`.
 2. Change directories into the root of the local site you'd like to deploy.
 3. Create a `.env` file with the following variables, changing their values as needed.
 
 ```sh
-WPE_ENV=yourinstall # The target WP Engine install name.
+SRV_ENV=yourinstall # The target Server install name.
 REMOTE_PATH=
 SRC_PATH=.
 PHP_LINT=TRUE
@@ -32,15 +32,15 @@ SCRIPT=
 3. Set an environment variable with your private SSH key, replacing the key file name with your own.
 
 ```sh
-export WPE_SSHG_KEY_PRIVATE=`cat ~/.ssh/my_sshg_key_rsa`
+export SSH_KEY_PRIVATE=`cat ~/.ssh/my_sshg_key_rsa`
 ```
 4. Run the deploy!
 
 ```sh
  docker run --rm \
-    -e "WPE_SSHG_KEY_PRIVATE" \
+    -e "SSH_KEY_PRIVATE" \
     --env-file ./.env \
     -v $(pwd):/site \
     --workdir=/site \
-    wpengine/site-deploy:latest
+    discountdaddy/site-deploy:latest
 ```
