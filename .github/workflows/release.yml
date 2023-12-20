@@ -60,12 +60,6 @@ jobs:
         with:
           node-version: 16.x
 
-      - name: Publish tags
-        id: publish
-        uses: ./.github/actions/publish
-        with:
-          version: ${{ needs.versioning.outputs.version }}
-
       - name: Get release notes
         id: notes
         if: steps.publish.outputs.published == 'true'
